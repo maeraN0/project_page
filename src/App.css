@@ -103,9 +103,9 @@ body {
 }
 
 .btn-contact {
-  background: var(--dark);
-  color: white;
-  border: none;
+  background: #1e293b; /* Daha belirgin bir koyu lacivert */
+  color: #f8fafc; /* Neredeyse beyaz bir gri */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.6rem 1.2rem;
   border-radius: 50px;
   display: flex;
@@ -113,6 +113,13 @@ body {
   gap: 8px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-contact:hover {
+  background: var(--primary); /* Üzerine gelince mavi olsun */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
 }
 
 /* Hero */
