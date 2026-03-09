@@ -53,9 +53,15 @@ function App() {
           <a href="#about">Vizyon</a>
           <a href="#stats">İstatistikler</a>
           <a href="#timeline">Günlük</a>
-          <button className="btn-contact">
+          <a 
+            href="https://www.linkedin.com/in/malik-%C3%B6mer-ceylan-36779b329/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn-contact"
+            style={{ textDecoration: 'none' }}
+          >
             Malik Ömer Ceylan <User size={16} />
-          </button>
+          </a>
         </div>
       </nav>
 
@@ -199,8 +205,8 @@ function App() {
             <p>Malik Ömer Ceylan | Sistem Analizi ve Tasarımı</p>
           </div>
           <div className="footer-links">
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
+            <a href="https://github.com/maeraN0" target="_blank" rel="noopener noreferrer">GitHub Profilim</a>
+            <a href="https://www.linkedin.com/in/malik-%C3%B6mer-ceylan-36779b329/" target="_blank" rel="noopener noreferrer">LinkedIn Profilim</a>
             <a href="#">Raporlar</a>
           </div>
         </div>

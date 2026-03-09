@@ -408,12 +408,16 @@ body {
   background: var(--dark);
   color: white;
   margin-top: 6rem;
+  position: relative;
+  z-index: 50;
 }
 
 .footer-top {
   display: flex;
   justify-content: space-between;
   margin-bottom: 3rem;
+  position: relative;
+  z-index: 60;
 }
 
 .footer-links {
@@ -421,7 +425,18 @@ body {
   gap: 2rem;
 }
 
-.footer-links a { color: var(--gray-200); text-decoration: none; }
+.footer-links a { 
+  color: var(--gray-200); 
+  text-decoration: underline; /* Altını çizelim ki link olduğu netleşsin */
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
+  pointer-events: auto; /* Tıklama olaylarını zorlayalım */
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
 
 .footer-bottom {
   text-align: center;
