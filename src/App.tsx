@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Activity, 
@@ -10,7 +11,13 @@ import {
   Server, 
   Stethoscope, 
   User,
-  ArrowRight
+  ArrowRight,
+  Sun,
+  Moon,
+  Monitor,
+  Target,
+  Rocket,
+  Shield
 } from 'lucide-react';
 import './App.css';
 import { reports } from './data/reports';
@@ -33,7 +40,58 @@ const itemVariants = {
 };
 
 function App() {
-  // Proje genel ilerleme yüzdesi (Haftalara göre dinamik hesaplanabilir, şimdilik manuel %15)
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'system';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handleChange = () => {
+      if (theme === 'system') {
+        root.setAttribute('data-theme', mediaQuery.matches ? 'dark' : 'light');
+      }
+    };
+
+    if (theme === 'system') {
+      root.setAttribute('data-theme', mediaQuery.matches ? 'dark' : 'light');
+    } else {
+      root.setAttribute('data-theme', theme);
+    }
+
+    mediaQuery.addEventListener('change', handleChange);
+    localStorage.setItem('theme', theme);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    if (theme === 'light') setTheme('dark');
+    else if (theme === 'dark') setTheme('system');
+    else setTheme('light');
+  };
+
+  const getThemeIcon = () => {
+    if (theme === 'light') return <Sun size={20} />;
+    if (theme === 'dark') return <Moon size={20} />;
+    return <Monitor size={20} />;
+  };
+
+  const scrollToTimeline = () => {
+    const element = document.getElementById('timeline');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToVision = () => {
+    const element = document.getElementById('vision');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Proje genel ilerleme yüzdesi
   const overallProgress = 15;
 
   return (
@@ -50,9 +108,18 @@ function App() {
           <span>DH-TAKİP</span>
         </div>
         <div className="nav-links">
-          <a href="#about">Vizyon</a>
-          <a href="#stats">İstatistikler</a>
-          <a href="#timeline">Günlük</a>
+          <a href="#vision" onClick={(e) => { e.preventDefault(); scrollToVision(); }}>Vizyon</a>
+          <a href="#stats" onClick={(e) => { e.preventDefault(); document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' }); }}>İstatistikler</a>
+          <a href="#timeline" onClick={(e) => { e.preventDefault(); scrollToTimeline(); }}>Günlük</a>
+        </div>
+        <div className="nav-actions">
+          <button 
+            className="theme-toggle" 
+            onClick={toggleTheme}
+            title={`Tema: ${theme === 'system' ? 'Sistem' : theme === 'dark' ? 'Koyu' : 'Açık'}`}
+          >
+            {getThemeIcon()}
+          </button>
           <a 
             href="https://github.com/maeraN0" 
             target="_blank" 
@@ -98,7 +165,9 @@ function App() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <button className="btn-main">Projeyi İncele <ArrowRight size={18} /></button>
+            <button className="btn-main" onClick={scrollToTimeline}>
+              Projeyi İncele <ArrowRight size={18} />
+            </button>
             <div className="hero-stats">
               <div className="stat-item">
                 <strong>{reports.length}</strong>
@@ -113,6 +182,31 @@ function App() {
           </motion.div>
         </section>
 
+        {/* VISION SECTION */}
+        <section id="vision" className="timeline-section" style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
+          <div className="section-title">
+            <h2>Vizyon ve Hedefler</h2>
+            <div className="title-underline"></div>
+          </div>
+          <div className="tech-pills" style={{ justifyContent: 'center', gap: '2rem', marginTop: '2rem' }}>
+            <motion.div className="report-glass-card" style={{ maxWidth: '300px', textAlign: 'center' }} whileHover={{ y: -10 }}>
+              <Target size={40} className="text-primary" style={{ margin: '0 auto 1rem', color: 'var(--primary)' }} />
+              <h3>Doğruluk</h3>
+              <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Hatasız veri girişi ve güvenilir raporlama mekanizmaları.</p>
+            </motion.div>
+            <motion.div className="report-glass-card" style={{ maxWidth: '300px', textAlign: 'center' }} whileHover={{ y: -10 }}>
+              <Rocket size={40} className="text-primary" style={{ margin: '0 auto 1rem', color: 'var(--primary)' }} />
+              <h3>Hız</h3>
+              <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Hasta kayıt ve randevu işlemlerinde maksimum performans.</p>
+            </motion.div>
+            <motion.div className="report-glass-card" style={{ maxWidth: '300px', textAlign: 'center' }} whileHover={{ y: -10 }}>
+              <Shield size={40} className="text-primary" style={{ margin: '0 auto 1rem', color: 'var(--primary)' }} />
+              <h3>Güvenlik</h3>
+              <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>KVKK uyumlu veri saklama ve yetkilendirme sistemleri.</p>
+            </motion.div>
+          </div>
+        </section>
+
         {/* PROGRESS DASHBOARD GRAPHICS */}
         <section id="stats" className="stats-dashboard">
           <motion.div 
@@ -121,7 +215,7 @@ function App() {
           >
             <div className="card-header">
               <h3>Genel Proje Sağlığı</h3>
-              <Activity size={20} className="text-primary" />
+              <Activity size={20} style={{ color: 'var(--primary)' }} />
             </div>
             <div className="progress-container">
               <div className="progress-bar">
@@ -207,7 +301,7 @@ function App() {
           <div className="footer-links">
             <a href="https://github.com/maeraN0" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/malik-%C3%B6mer-ceylan-36779b329/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="#">Raporlar</a>
+            <a href="#timeline" onClick={(e) => { e.preventDefault(); scrollToTimeline(); }}>Raporlar</a>
           </div>
         </div>
         <div className="footer-bottom">

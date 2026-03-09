@@ -9,8 +9,27 @@
   --gray-200: #e2e8f0;
   --gray-600: #475569;
   --success: #10b981;
-  --glass: rgba(255, 255, 255, 0.7);
+  --glass: rgba(255, 255, 255, 0.75);
   --glass-border: rgba(255, 255, 255, 0.5);
+  --bg-body: #f1f5f9;
+  --card-bg: #ffffff;
+}
+
+[data-theme='dark'] {
+  --primary: #38bdf8;
+  --primary-dark: #0ea5e9;
+  --secondary: #818cf8;
+  --dark: #f8fafc;
+  --white: #0f172a;
+  --gray-50: #1e293b;
+  --gray-100: #334155;
+  --gray-200: #475569;
+  --gray-600: #94a3b8;
+  --success: #34d399;
+  --glass: rgba(15, 23, 42, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --bg-body: #020617;
+  --card-bg: #1e293b;
 }
 
 * {
@@ -21,8 +40,9 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #f0f4f8;
+  background-color: var(--bg-body);
   color: var(--dark);
+  transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
 }
 
@@ -38,8 +58,12 @@ body {
   height: 500px;
   filter: blur(80px);
   z-index: -1;
-  opacity: 0.4;
+  opacity: 0.2;
   border-radius: 50%;
+}
+
+[data-theme='dark'] .bg-blob {
+  opacity: 0.15;
 }
 
 .blob-1 {
@@ -66,6 +90,7 @@ body {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--glass-border);
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .logo {
@@ -88,13 +113,13 @@ body {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--gray-600);
-  font-weight: 500;
+  font-weight: 600;
   transition: 0.3s;
 }
 
@@ -102,24 +127,50 @@ body {
   color: var(--primary);
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-toggle {
+  background: var(--gray-100);
+  border: 1px solid var(--glass-border);
+  color: var(--dark);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--gray-200);
+  transform: rotate(15deg);
+}
+
 .btn-contact {
-  background: #1e293b; /* Daha belirgin bir koyu lacivert */
-  color: #f8fafc; /* Neredeyse beyaz bir gri */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--primary);
+  color: white;
+  border: 1px solid var(--primary-dark);
   padding: 0.6rem 1.2rem;
-  border-radius: 50px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
 }
 
 .btn-contact:hover {
-  background: var(--primary); /* Üzerine gelince mavi olsun */
+  background: var(--primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.25);
 }
 
 /* Hero */
@@ -131,7 +182,7 @@ body {
 }
 
 .premium-badge {
-  background: white;
+  background: var(--card-bg);
   padding: 0.5rem 1.25rem;
   border-radius: 50px;
   font-size: 0.875rem;
@@ -194,10 +245,11 @@ body {
 .hero-stats {
   display: flex;
   gap: 2rem;
-  background: white;
+  background: var(--card-bg);
   padding: 1rem 3rem;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--gray-100);
 }
 
 .stat-item {
@@ -265,7 +317,7 @@ body {
 }
 
 .pill {
-  background: white;
+  background: var(--card-bg);
   padding: 6px 14px;
   border-radius: 50px;
   font-size: 0.8rem;
@@ -274,6 +326,7 @@ body {
   align-items: center;
   gap: 6px;
   border: 1px solid var(--gray-100);
+  color: var(--dark);
 }
 
 /* Timeline */
@@ -311,7 +364,7 @@ body {
   width: 20px;
   height: 20px;
   background: var(--primary);
-  border: 4px solid white;
+  border: 4px solid var(--white);
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
 }
@@ -328,7 +381,7 @@ body {
 }
 
 .report-glass-card {
-  background: white;
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
@@ -398,6 +451,7 @@ body {
 }
 
 .status-tag.tamamlandı { background: #dcfce7; color: #166534; }
+[data-theme='dark'] .status-tag.tamamlandı { background: #065f46; color: #d1fae5; }
 
 .btn-detail {
   background: none;
@@ -413,7 +467,7 @@ body {
 .modern-footer {
   padding: 4rem 5% 2rem;
   background: var(--dark);
-  color: white;
+  color: var(--white);
   margin-top: 6rem;
   position: relative;
   z-index: 50;
@@ -434,11 +488,13 @@ body {
 
 .footer-links a { 
   color: var(--gray-200); 
-  text-decoration: underline; /* Altını çizelim ki link olduğu netleşsin */
+  text-decoration: none;
   cursor: pointer;
   position: relative;
   z-index: 100;
-  pointer-events: auto; /* Tıklama olaylarını zorlayalım */
+  pointer-events: auto;
+  font-weight: 500;
+  transition: 0.3s;
 }
 
 .footer-links a:hover {
