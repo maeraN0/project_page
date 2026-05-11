@@ -22,5 +22,20 @@ export const reports: ProjectReport[] = [
         "Teknoloji yığını (Stack) seçimi",
         "Proje ilerleme blogunun kurulması"
     ]
+  },
+  {
+    id: 2,
+    week: "Hafta 2",
+    date: "16 Mart 2026",
+    title: "UML Modelleme ve Sistem Analizi",
+    content: "Projenin kavramsal tasarımı için gerekli UML diyagramları oluşturuldu. Aktörler, kullanım durumları (Use Case), iş akışları (Activity) ve sistem etkileşimleri (Sequence) detaylandırıldı. Veri tabanı durum geçişleri planlandı.",
+    status: "Tamamlandı",
+    tasks: [
+        "Aktörlerin ve Use Case listesinin belirlenmesi",
+        "Use Case diyagramının çizilmesi",
+        "Süreçler için Aktivite ve Sıralama diyagramlarının hazırlanması",
+        "Durum Makinesi diyagramının oluşturulması",
+        "Sistem Analizi raporunun tamamlanması"
+    ]
   }
 ];

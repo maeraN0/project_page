@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import './App.css';
 import { reports } from './data/reports';
+import UMLSection from './components/UMLSection';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -92,7 +93,7 @@ function App() {
   };
 
   // Proje genel ilerleme yüzdesi
-  const overallProgress = 15;
+  const overallProgress = 35;
 
   return (
     <div className="app">
@@ -109,6 +110,7 @@ function App() {
         </div>
         <div className="nav-links">
           <a href="#vision" onClick={(e) => { e.preventDefault(); scrollToVision(); }}>Vizyon</a>
+          <a href="#uml" onClick={(e) => { e.preventDefault(); document.getElementById('uml')?.scrollIntoView({ behavior: 'smooth' }); }}>UML Modelleme</a>
           <a href="#stats" onClick={(e) => { e.preventDefault(); document.getElementById('stats')?.scrollIntoView({ behavior: 'smooth' }); }}>İstatistikler</a>
           <a href="#timeline" onClick={(e) => { e.preventDefault(); scrollToTimeline(); }}>Günlük</a>
         </div>
@@ -133,7 +135,7 @@ function App() {
       </nav>
 
       <main>
-        {/* HERO SECTION */}
+        {/* ... (keep hero section) ... */}
         <section className="hero">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -175,7 +177,7 @@ function App() {
               </div>
               <div className="stat-sep"></div>
               <div className="stat-item">
-                <strong>{overallProgress}%</strong>
+                <strong>35%</strong>
                 <span>İlerleme</span>
               </div>
             </div>
@@ -206,6 +208,9 @@ function App() {
             </motion.div>
           </div>
         </section>
+
+        {/* UML SECTION */}
+        <UMLSection />
 
         {/* PROGRESS DASHBOARD GRAPHICS */}
         <section id="stats" className="stats-dashboard">

@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// "postgresql" kullanmak istediğinizde burayı "postgresql" yapıp
+// .env dosyasındaki DATABASE_URL'i güncellemeniz yeterli olacaktır.
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  role          String         @default("Sekreter") // "Hekim", "Sekreter", "Admin"
+  appointments  Appointment[]  @relation("DoctorAppointments")
+  treatments    Treatment[]    @relation("DoctorTreatments")
+  prescriptions Prescription[] @relation("DoctorPrescriptions")
+}
+
+model Patient {
+  id            Int            @id @default(autoincrement())
+  name          String
+  phone         String?
+  tc_no         String?        @unique
+  last_visit    String?
+  appointments  Appointment[]
+  treatments    Treatment[]
+  prescriptions Prescription[]
+  payments      Payment[]
+}
+
+model Appointment {
+  id         Int      @id @default(autoincrement())
+  patient_id Int
+  patient    Patient  @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  doctor_id  Int?
+  doctor     User?    @relation("DoctorAppointments", fields: [doctor_id], references: [id])
+  date       String
+  time       String
+  status     String   @default("Beklemede") // "Beklemede", "Planlandı", "Tamamlandı", "İptal"
+}
+
+model Treatment {
+  id           Int       @id @default(autoincrement())
+  patient_id   Int
+  patient      Patient   @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  doctor_id    Int
+  doctor       User      @relation("DoctorTreatments", fields: [doctor_id], references: [id])
+  tooth_number String?
+  description  String
+  cost         Float     @default(0.0)
+  date         String
+  payments     Payment[]
+}
+
+model Prescription {
+  id         Int     @id @default(autoincrement())
+  patient_id Int
+  patient    Patient @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  doctor_id  Int
+  doctor     User    @relation("DoctorPrescriptions", fields: [doctor_id], references: [id])
+  details    String
+  date       String
+}
+
+model Payment {
+  id           Int        @id @default(autoincrement())
+  patient_id   Int
+  patient      Patient    @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  treatment_id Int?
+  treatment    Treatment? @relation(fields: [treatment_id], references: [id])
+  amount       Float
+  method       String     @default("Nakit") // "Nakit", "Kredi Kartı"
+  date         String
+}
